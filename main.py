@@ -2,7 +2,6 @@
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
-from model import make_model
 
 #%%
 def load_img(image, img_res, m_input):
@@ -129,8 +128,7 @@ def correction_outlier(y, radius, thr, eps, patience=10, max_iter=50):
 
 #%%
 # Load TensorFlow model and get input size.
-# model = tf.keras.models.load_model('OilFlowCNN.h5', compile=False)
-model = make_model()
+model = tf.keras.models.load_model(r'.\OilFlowCNN.h5', compile=False)
 model_input =  model.input_shape[1]
 
 # Image and its resolution variable.
@@ -192,6 +190,7 @@ ax.quiver(X,Y, U/4, -V/4, outliers, angles='xy', pivot='mid', scale_units='xy',
                         headaxislength=3.1, width=0.0035)
 ax.axis('off')
 fig.tight_layout()
+fig.savefig('.\output_0.png',bbox_inches='tight',dpi=600)
 
 # Predicted values after correction step 1.
 U_c1, V_c1 = np.cos(y_c1), np.sin(y_c1)
@@ -203,6 +202,7 @@ ax.quiver(X,Y, U_c1/4, -V_c1/4, outliers_r, angles='xy', pivot='mid', scale_unit
                         headaxislength=3.1, width=0.0035)
 ax.axis('off')
 fig.tight_layout()
+fig.savefig('.\output_1.png',bbox_inches='tight',dpi=600)
 
 # Predicted values after correction step 2.
 U_c2, V_c2 = np.cos(y_c2), np.sin(y_c2)
@@ -213,3 +213,5 @@ ax.quiver(X,Y, U_c2/4, -V_c2/4, outliers_c, angles='xy', pivot='mid', scale_unit
                         linewidth=.5, headwidth=3, headlength=3.5, 
                         headaxislength=3.1, width=0.0035)
 ax.axis('off')
+fig.tight_layout()
+fig.savefig('.\output_2.png',bbox_inches='tight',dpi=600)
