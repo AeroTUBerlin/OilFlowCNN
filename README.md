@@ -17,5 +17,5 @@ Convolutional neural network used to predict the flow direction from an oil flow
 
 This project uses an implementation of the algorithm described in:
 
-Jerry Westerweel and Fulvio Scarano, "Universal outlier detection for PIV data", Experiments in Fluids, 2005                                #
+Jerry Westerweel and Fulvio Scarano, "Universal outlier detection for PIV data", Experiments in Fluids, 2005
 DOI: [https://doi.org/10.1007/s00348-005-0016-6 ](https://doi.org/10.1007/s00348-005-0016-6 )
