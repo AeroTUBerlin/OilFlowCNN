@@ -1,7 +1,15 @@
+#########################################################################################
+# File: main.py                                                                         #
+# Author: Jonas Schulte-Sasse                                                           #
+# Created: 2024-11-24                                                                   #
+# Description: Flow direction prediction of an oil flow visualization with a CNN.       #
+#########################################################################################
+
 #%%
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
+from outlier_algorithm import detection_outlier
 
 #%%
 def load_img(image, img_res, m_input):
@@ -37,36 +45,6 @@ def patch_img(img, p_s, p_w, p_h):
     patches = np.transpose(patches, (0,2,1,3,4))
     patches = np.reshape(patches, (p_h*p_w, p_s, p_s, -1))
     return patches
-
-def detection_outlier(U,V, thr,radius,eps):    
-    J, I = U.shape
-
-    def Normfluct(AngleComp):
-        MedianRes = np.zeros([J,I])
-        normfluct = np.zeros([J,I])
-
-        AngleComp = np.pad(AngleComp, pad_width=radius, mode='constant', constant_values=(np.nan))
-        
-        for ii, i in enumerate(np.arange( radius, I-radius+2)):
-            for jj, j in enumerate(np.arange(radius, J-radius+2)):
-                Neigh = AngleComp[j-radius:j+radius+1, 
-                                  i-radius:i+radius+1]
-
-                NeighCol = Neigh.flatten()[:,None]
-                NeighCol2 = np.vstack([NeighCol[:(2*radius+1)*radius+radius],
-                                       NeighCol[(2*radius+1)*radius+radius+1:]])
-                
-                NeighCol2 = NeighCol2[~np.isnan(NeighCol2)]
-
-                Median = np.median(NeighCol2)
-                Fluct= AngleComp[j,i] - Median
-                
-                Res = NeighCol2 - Median
-                MedianRes = np.median(np.abs(Res))
-                normfluct[jj,ii] = np.abs(Fluct/(MedianRes+eps))
-        return normfluct
-    
-    return np.sqrt(Normfluct(U)**2 + Normfluct(V)**2) > thr 
 
 def correction_outlier(y, radius, thr, eps, patience=10, max_iter=50):
     neigbor_mask = np.arange(-1, 1+1)[:,None].repeat(3,axis=1)
@@ -190,7 +168,6 @@ ax.quiver(X,Y, U/4, -V/4, outliers, angles='xy', pivot='mid', scale_units='xy',
                         headaxislength=3.1, width=0.0035)
 ax.axis('off')
 fig.tight_layout()
-fig.savefig('.\output_0.png',bbox_inches='tight',dpi=600)
 
 # Predicted values after correction step 1.
 U_c1, V_c1 = np.cos(y_c1), np.sin(y_c1)
@@ -202,7 +179,6 @@ ax.quiver(X,Y, U_c1/4, -V_c1/4, outliers_r, angles='xy', pivot='mid', scale_unit
                         headaxislength=3.1, width=0.0035)
 ax.axis('off')
 fig.tight_layout()
-fig.savefig('.\output_1.png',bbox_inches='tight',dpi=600)
 
 # Predicted values after correction step 2.
 U_c2, V_c2 = np.cos(y_c2), np.sin(y_c2)
@@ -214,4 +190,3 @@ ax.quiver(X,Y, U_c2/4, -V_c2/4, outliers_c, angles='xy', pivot='mid', scale_unit
                         headaxislength=3.1, width=0.0035)
 ax.axis('off')
 fig.tight_layout()
-fig.savefig('.\output_2.png',bbox_inches='tight',dpi=600)
