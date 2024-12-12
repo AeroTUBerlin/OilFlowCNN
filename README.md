@@ -6,14 +6,17 @@ The [code](https://github.com/aero24xx/OilFlowCNN/blob/main/main.py) provided in
 
 ## Example visualization:
 The image shows an oil-flow visualization over a backward facing ramp in gray scales.
+
 ![Oil flow visualization](https://github.com/aero24xx/OilFlowCNN/blob/main/image.png "Backward facing ramp")
 
 ### Output prediction:
 The following image shows the predicted direction (arrows) obtained by the CNN. The color of each arrows depends on the outlier algorithm output; red is not calculated as an outlier, blue is an outlier.  
+
 ![Output precition](https://github.com/aero24xx/OilFlowCNN/blob/main/output_0.png "Backward facing ramp")
 
 ### Step 1 - corrected values:
 The first step to correct the field is made by rotating each outlier by 180° and calculating its neighbourhood to check if the change has corrected the outlier.
+
 ![Oil flow visualization](https://github.com/aero24xx/OilFlowCNN/blob/main/output_1.png "Backward facing ramp")
 
 ### Step 2 - corrected values:
