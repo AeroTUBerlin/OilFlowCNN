@@ -106,7 +106,7 @@ def correction_outlier(y, radius, thr, eps, patience=10, max_iter=50):
 
 #%%
 # Load TensorFlow model and get input size.
-model = tf.keras.models.load_model(r'.\OilFlowCNN.h5', compile=False)
+model = tf.keras.models.load_model(r'.\OilFlowCNN.keras', compile=False) # or r'.\OilFlowCNN.h5'
 model_input =  model.input_shape[1]
 
 # Image and its resolution variable.
