@@ -2,7 +2,7 @@
 This site supports the paper published [paper], showcasing a Convolutional Neural Network (CNN) trained to predict the flow direction from an oil flow visualizations. 
 
 ## Overview
-The [code](https://github.com/aero24xx/OilFlowCNN/blob/main/main.py) provided in this repository shows an example to predict the flow direction.
+The [code](https://github.com/aero24xx/OilFlowCNN/blob/main/main.py) provided in this repository demonstrates an example of predicting flow direction. It has been tested with TensorFlow 2.15.0 and runs without issues.
 
 ## Example visualization:
 The image shows an oil-flow visualization over a backward facing ramp in gray scales.
